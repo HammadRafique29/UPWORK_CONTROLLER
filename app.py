@@ -30,7 +30,7 @@ def index():
     if not url: return jsonify({'error': 'URL is required'}), 400
     try:
         data = download_file(url, "None")
-        PROPOSALS.append({'date':datetime.now(), "Data":data})
+        PROPOSALS.append(data)
         return jsonify({'message': f'File Sended'}), 200
     except requests.RequestException as e:
         return jsonify({'error': str(e)}), 500

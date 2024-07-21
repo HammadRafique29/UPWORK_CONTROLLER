@@ -1,4 +1,5 @@
 import requests
+import json
 
 def send_File():
     url = 'http://131.186.0.242:5000/download'
@@ -12,8 +13,10 @@ def getProposals():
     url = 'http://131.186.0.242:5000/getProposals'
     headers = {'Content-Type': 'application/json'}
     response = requests.get(url, headers=headers)
-    print(response.json())
+    response = response.json()
+    print(response['Data'][0])
+    # print(response.json())
 
 if __name__ == '__main__':
-    send_File()
-    # getProposals()
+    # send_File()
+    getProposals()
