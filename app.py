@@ -38,7 +38,7 @@ def index():
 
 @app.route('/getProposals', methods=['GET'])
 def getProposals():
-    data = request.get_json()
+    # data = request.get_json()
     try: return jsonify({'Data': PROPOSALS}), 200
     except requests.RequestException as e: return jsonify({'error': str(e)}), 500
 
