@@ -64,7 +64,13 @@ def index():
 
 # Function to parse the date string
 def parse_date(date_string):
-    return datetime.strptime(date_string, '%a, %d %b %Y %H:%M:%S %z')
+    try:
+        return datetime.strptime(date_string, '%a, %d %b %Y %H:%M:%S %z')
+    except ValueError:
+        try:
+            return datetime.strptime(date_string, '%Y-%m-%d %H:%M:%S')
+        except ValueError:
+            return None
 
 # Function to convert the date to Asia/Karachi timezone
 def convert_to_asia_karachi(date):
