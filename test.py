@@ -17,7 +17,7 @@ def send_File():
     print(response.json())
     
 def getProposals():
-    url = 'http://127.0.0.1:5000/getProposals' #131.186.0.242
+    url = 'http://131.186.0.242:5000/getProposals' #131.186.0.242
     headers = {'Content-Type': 'application/json'}
     response = requests.get(url, headers=headers)
     response = response.json()
@@ -26,8 +26,8 @@ def getProposals():
     # print(response.json())
 
 if __name__ == '__main__':
-    # send_File()
-    getProposals()
+    send_File()
+    # getProposals()
 
     
     

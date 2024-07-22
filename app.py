@@ -22,7 +22,7 @@ def download_file(url, file_path):
         return None
 
 
-@app.route('/download', methods=['POST'])
+@app.route('/update', methods=['POST'])
 def index():
     data = request.get_json()
     data = data.get('data')
