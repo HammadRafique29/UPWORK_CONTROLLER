@@ -29,7 +29,8 @@ def getProposals():
 if __name__ == '__main__':
     # send_File()
     res = getProposals()
-    print(res[0].keys())
+    print(res)
+    # print(res[0].keys())
 
     
     

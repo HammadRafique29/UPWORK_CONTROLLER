@@ -74,15 +74,18 @@ def convert_to_asia_karachi(date):
 @app.route('/getProposals', methods=['GET'])
 def getProposals():
     try:
+        # Filter out proposals without a 'time' key
+        valid_proposals = [p for p in PROPOSALS if 'time' in p]
+        
         # Sort the proposals based on the parsed date in descending order
-        sorted_proposals = sorted(PROPOSALS, key=lambda x: parse_date(x['time']), reverse=True)
+        sorted_proposals = sorted(valid_proposals, key=lambda x: parse_date(x['time']), reverse=True)
         
         # Convert each proposal's time to Asia/Karachi timezone
         for proposal in sorted_proposals:
             proposal['time'] = convert_to_asia_karachi(parse_date(proposal['time']))
         
         return jsonify({'Data': sorted_proposals}), 200
-    except requests.RequestException as e:
+    except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 
