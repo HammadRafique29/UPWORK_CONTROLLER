@@ -25,12 +25,13 @@ def download_file(url, file_path):
 @app.route('/download', methods=['POST'])
 def index():
     data = request.get_json()
-    url = data.get('url')
-    if not url: return jsonify({'error': 'URL is required'}), 400
+    data = data.get('data')
+    if not data: return jsonify({'error': 'Data is required'}), 400
     try:
-        data = download_file(url, "None")
+        # data = download_file(url, "None")
         if data:
-            if 'des' in data:
+            print(data.keys())
+            if 'des' in data.keys():
                 text = data['des']
                 budget_pattern = r'Budget\s*:\s*\$([\d,]+)'
                 posted_date_pattern = r'Posted On\s*:\s*([\w\s,:\d]+ UTC)'
@@ -60,7 +61,6 @@ def index():
 
 @app.route('/getProposals', methods=['GET'])
 def getProposals():
-    # data = request.get_json()
     try: return jsonify({'Data': PROPOSALS}), 200
     except requests.RequestException as e: return jsonify({'error': str(e)}), 500
 
