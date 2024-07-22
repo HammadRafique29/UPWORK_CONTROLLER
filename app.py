@@ -84,6 +84,8 @@ def getProposals():
         for proposal in sorted_proposals:
             proposal['time'] = convert_to_asia_karachi(parse_date(proposal['time']))
         
+        print(proposal)
+        
         return jsonify({'Data': sorted_proposals}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
