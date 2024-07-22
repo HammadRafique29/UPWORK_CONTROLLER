@@ -22,7 +22,7 @@ def getProposals():
     response = requests.get(url, headers=headers)
     response = response.json()
     # print(response['Data'])
-    return response['Data']
+    return response
     # print(response['Data'][0][0].keys())
     # print(response.json())
 
