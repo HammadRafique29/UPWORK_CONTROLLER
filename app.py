@@ -1,6 +1,7 @@
 
 import re
 import json
+import pytz
 import requests
 from datetime import datetime
 from flask import Flask, request, jsonify
@@ -47,6 +48,7 @@ def index():
                     category = re.search(category_pattern, text).group(1).strip()
                 except: pass
                 
+                data['date'] = f"{datetime.now().date().today()} {datetime.now().hour}:{datetime.now().minute}:{datetime.now().second}"
                 data['budget'] = budget if budget else "None"
                 data['posted_date'] = posted_date if posted_date else "None"
                 data['skills'] = skills if skills else "None"
@@ -59,10 +61,29 @@ def index():
         return jsonify({'error': str(e)}), 500
 
 
+
+# Function to parse the date string
+def parse_date(date_string):
+    return datetime.strptime(date_string, '%a, %d %b %Y %H:%M:%S %z')
+
+# Function to convert the date to Asia/Karachi timezone
+def convert_to_asia_karachi(date):
+    asia_karachi = pytz.timezone('Asia/Karachi')
+    return date.astimezone(asia_karachi).strftime('%a, %d %b %Y %H:%M:%S %z')
+
 @app.route('/getProposals', methods=['GET'])
 def getProposals():
-    try: return jsonify({'Data': PROPOSALS}), 200
-    except requests.RequestException as e: return jsonify({'error': str(e)}), 500
+    try:
+        # Sort the proposals based on the parsed date in descending order
+        sorted_proposals = sorted(PROPOSALS, key=lambda x: parse_date(x['time']), reverse=True)
+        
+        # Convert each proposal's time to Asia/Karachi timezone
+        for proposal in sorted_proposals:
+            proposal['time'] = convert_to_asia_karachi(parse_date(proposal['time']))
+        
+        return jsonify({'Data': sorted_proposals}), 200
+    except requests.RequestException as e:
+        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':

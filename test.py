@@ -21,13 +21,15 @@ def getProposals():
     headers = {'Content-Type': 'application/json'}
     response = requests.get(url, headers=headers)
     response = response.json()
-    print(response['Data'])
+    # print(response['Data'])
+    return response['Data']
     # print(response['Data'][0][0].keys())
     # print(response.json())
 
 if __name__ == '__main__':
-    send_File()
-    # getProposals()
+    # send_File()
+    res = getProposals()
+    print(res[0].keys())
 
     
     
